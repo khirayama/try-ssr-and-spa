@@ -1,0 +1,13 @@
+{
+  "name": "TRY SSR + SPA",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "khirayama <https://github.com/khirayama>",
+  "license": "MIT",
+  "scripts": {
+    "start": "NODE_ENV=development node app.js"
+  },
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
