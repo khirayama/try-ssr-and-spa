@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon --exec npm run app",
-    "app": "NODE_ENV=development babel-node app.js"
+    "app": "NODE_PATH=./ NODE_ENV=development babel-node server/app.js"
   },
   "dependencies": {
     "babel-cli": "^6.18.0",

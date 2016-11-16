@@ -3,10 +3,10 @@ import express from 'express';
 import React from 'react';
 import {renderToString} from 'react-dom/server';
 
-import {dispatch, removeAllListeners} from './dispatcher';
-import Store from './store';
+import {dispatch, removeAllListeners} from 'universal/dispatcher';
+import Store from 'universal/store';
 
-import Container from './views/container';
+import Container from 'universal/views/container';
 
 const app = express();
 
