@@ -13,8 +13,5 @@ window.addEventListener('DOMContentLoaded', () => {
   const store = new Store();
   store.initialize(state);
 
-  const app = document.querySelector('#app');
-  app.innerHTML = '';
-
-  ReactDOM.render(<Container store={store}/>, app);
+  ReactDOM.render(<Container store={store}/>, document.querySelector('#app'));
 });
