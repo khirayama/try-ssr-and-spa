@@ -1,6 +1,46 @@
 import React, {Component, PropTypes} from 'react';
 
+import {dispatch} from 'universal/dispatcher';
+
+function changeHistory(pathname) {
+  if (history) {
+    history.pushState(null, null, pathname);
+  }
+  dispatch({
+    type: 'CHANGE_HISTORY',
+    pathname,
+  });
+};
+
+class Link extends Component {
+  constructor() {
+    super();
+
+    this.handleClick = this._handleClick.bind(this);
+  }
+  _handleClick(event) {
+    event.preventDefault();
+    changeHistory(this.props.href);
+  }
+  render() {
+    return <a href={this.props.href} onClick={this.handleClick}>{this.props.children}</a>;
+  }
+}
+
 export default class Container extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {store: this.props.store};
+
+    this.updateState = this._updateState.bind(this);
+  }
+  componentDidMount() {
+    this.props.store.addChangeListener(this.updateState);
+  }
+  _updateState() {
+    this.setState({store: this.props.store});
+  }
   getStore() {
     return this.props.store;
   }
@@ -12,21 +52,21 @@ export default class Container extends Component {
         return (
           <section>
             <h1>Top</h1>
-            <a href="/dashboard">to dashboard</a>
+            <Link href="/dashboard">to dashboard</Link>
           </section>
         );
       case '/dashboard':
         return (
           <section>
             <h1>Dashboard</h1>
-            <a href="/">to top</a>
+            <Link href="/">to top</Link>
           </section>
         );
       default:
         return (
           <section>
             <h1>Not Found</h1>
-            <a href="/">to top</a>
+            <Link href="/">to top</Link>
           </section>
         );
     }
