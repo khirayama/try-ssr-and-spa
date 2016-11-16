@@ -48,4 +48,4 @@ function buildScripts(isWatch) {
 // tasks
 gulp.task('build:scripts', buildScripts(false));
 gulp.task('watch:scripts', buildScripts(true));
-gulp.task('development', ['watch:scripts']);
+gulp.task('watch', ['watch:scripts']);

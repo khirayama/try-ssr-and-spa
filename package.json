@@ -5,9 +5,11 @@
   "author": "khirayama <https://github.com/khirayama>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --ignore client --ignore public --exec npm run development:server",
-    "development:server": "NODE_PATH=./ NODE_ENV=development babel-node server/app.js",
-    "development:client": "NODE_PATH=./ gulp development"
+    "start": "npm run development",
+    "development": "npm run watch:server & npm run watch:client",
+    "build:server": "NODE_PATH=./ NODE_ENV=development babel-node server/app.js",
+    "watch:server": "nodemon --ignore client --ignore public --exec npm run build:server",
+    "watch:client": "NODE_PATH=./ gulp watch"
   },
   "dependencies": {
     "babel-cli": "^6.18.0",
