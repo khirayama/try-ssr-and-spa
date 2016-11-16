@@ -18,8 +18,11 @@ function layout(content, state) {
         <meta charset="utf-8">
         <title>SSR + SPA</title>
       </head>
-      <body>${content}</body>
+      <body>
+        <section id="app">${content}</section>
+      </body>
       <script>var state = ${JSON.stringify(state)}</script>
+      <script src="/bundle.js"></script>
     </html>
   `;
 }
@@ -50,6 +53,7 @@ app.get('/dashboard', (req, res) => {
   dispatch({type: 'START_APP', pathname: req.path});
 });
 
+app.use(express.static('public'));
 app.listen(3000, () => {
   console.log('listening on port 3000');
 });

@@ -5,16 +5,25 @@
   "author": "khirayama <https://github.com/khirayama>",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon --exec npm run app",
-    "app": "NODE_PATH=./ NODE_ENV=development babel-node server/app.js"
+    "start": "nodemon --exec npm run development:server",
+    "development:server": "NODE_PATH=./ NODE_ENV=development babel-node server/app.js",
+    "development:client": "NODE_PATH=./ gulp development"
   },
   "dependencies": {
     "babel-cli": "^6.18.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.1",
     "express": "^4.14.0",
+    "gulp": "^3.9.1",
+    "gulp-plumber": "^1.1.0",
     "nodemon": "^1.11.0",
+    "plumber": "^0.4.8",
     "react": "^15.3.2",
-    "react-dom": "^15.3.2"
+    "react-dom": "^15.3.2",
+    "source": "^0.0.3",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.7.0"
   }
 }
