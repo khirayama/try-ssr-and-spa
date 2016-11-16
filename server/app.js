@@ -17,12 +17,12 @@ function layout(content, state) {
       <head>
         <meta charset="utf-8">
         <title>SSR + SPA</title>
+        <script src="/bundle.js" defer></script>
       </head>
       <body>
         <section id="app">${content}</section>
       </body>
       <script>var state = ${JSON.stringify(state)}</script>
-      <script src="/bundle.js"></script>
     </html>
   `;
 }
