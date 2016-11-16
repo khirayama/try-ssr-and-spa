@@ -1,8 +1,12 @@
 import {EventEmitter} from 'events';
 
-import {subscribe} from './dispatcher';
+import types from 'universal/action-types';
+import {subscribe} from 'universal/dispatcher';
 
-const EVENT_CHANGE = '__CHANGE_STORE';
+const actionTypes = {
+  CHANGE_STORE: '__CHANGE_STORE',
+  READY_APP: '__READY_APP',
+};
 
 export default class Store extends EventEmitter {
   constructor() {
@@ -17,12 +21,12 @@ export default class Store extends EventEmitter {
   _subscribe() {
     subscribe(action => {
       switch (action.type) {
-        case 'START_APP':
+        case types.START_APP:
           this.state.load = true;
           this.state.pathname = action.pathname;
-          this.emit('__READY_APP');
+          this.emit(actionTypes.READY_APP);
           break;
-        case 'CHANGE_HISTORY':
+        case types.CHANGE_HISTORY:
           this.state.pathname = action.pathname;
           break;
       }
@@ -37,12 +41,12 @@ export default class Store extends EventEmitter {
     return Object.assign({}, this.state);
   }
   ready(callback) {
-    this.on('__READY_APP', callback);
+    this.on(actionTypes.READY_APP, callback);
   }
   dispatchChange() {
-    this.emit(EVENT_CHANGE);
+    this.emit(actionTypes.CHANGE_STORE);
   }
   addChangeListener(listener) {
-    this.addListener(EVENT_CHANGE, listener);
+    this.addListener(actionTypes.CHANGE_STORE, listener);
   }
 }

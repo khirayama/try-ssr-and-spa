@@ -1,13 +1,14 @@
 import React, {Component, PropTypes} from 'react';
 
 import {dispatch} from 'universal/dispatcher';
+import types from 'universal/action-types';
 
 function changeHistory(pathname) {
   if (history) {
     history.pushState(null, null, pathname);
   }
   dispatch({
-    type: 'CHANGE_HISTORY',
+    type: types.CHANGE_HISTORY,
     pathname,
   });
 };

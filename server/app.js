@@ -5,6 +5,7 @@ import {renderToString} from 'react-dom/server';
 
 import {dispatch, removeAllListeners} from 'universal/dispatcher';
 import Store from 'universal/store';
+import types from 'universal/action-types';
 
 import Container from 'universal/views/container';
 
@@ -37,7 +38,7 @@ app.get('/', (req, res) => {
     res.send(layout(content, store.getState()));
   });
 
-  dispatch({type: 'START_APP', pathname: req.path});
+  dispatch({type: types.START_APP, pathname: req.path});
 });
 
 app.get('/dashboard', (req, res) => {
@@ -50,7 +51,7 @@ app.get('/dashboard', (req, res) => {
     res.send(layout(content, store.getState()));
   });
 
-  dispatch({type: 'START_APP', pathname: req.path});
+  dispatch({type: types.START_APP, pathname: req.path});
 });
 
 app.use(express.static('public'));
