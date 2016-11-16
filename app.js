@@ -10,7 +10,7 @@ import Container from './views/container';
 
 const app = express();
 
-function layout(content) {
+function layout(content, state) {
   return `
     <!DOCTYPE html>
     <html>
@@ -19,6 +19,7 @@ function layout(content) {
         <title>SSR + SPA</title>
       </head>
       <body>${content}</body>
+      <script>var state = ${JSON.stringify(state)}</script>
     </html>
   `;
 }
@@ -30,7 +31,7 @@ app.get('/', (req, res) => {
 
   store.ready(() => {
     const content = renderToString(<Container store={store} />);
-    res.send(layout(content));
+    res.send(layout(content, store.getState()));
   });
 
   dispatch({type: 'START_APP', pathname: req.path});
@@ -43,7 +44,7 @@ app.get('/dashboard', (req, res) => {
 
   store.ready(() => {
     const content = renderToString(<Container store={store} />);
-    res.send(layout(content));
+    res.send(layout(content, store.getState()));
   });
 
   dispatch({type: 'START_APP', pathname: req.path});
