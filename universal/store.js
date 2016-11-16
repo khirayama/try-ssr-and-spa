@@ -26,6 +26,9 @@ export default class Store extends EventEmitter {
   ready(callback) {
     this.on('__READY_APP', callback);
   }
+  initialize(state) {
+    this.state = state || this.state;
+  }
   getState() {
     return Object.assign({}, this.state);
   }

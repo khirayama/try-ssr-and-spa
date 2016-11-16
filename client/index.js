@@ -11,6 +11,10 @@ window.addEventListener('popstate', () => {
 
 window.addEventListener('DOMContentLoaded', () => {
   const store = new Store();
+  store.initialize(state);
 
-  ReactDOM.render(<Container store={store}/>, document.querySelector('#app'));
+  const app = document.querySelector('#app');
+  app.innerHTML = '';
+
+  ReactDOM.render(<Container store={store}/>, app);
 });
