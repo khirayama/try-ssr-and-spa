@@ -17,7 +17,7 @@ function layout(content, state) {
     <html>
       <head>
         <meta charset="utf-8">
-        <title>SSR + SPA</title>
+        <title>${state.title}</title>
         <script src="/bundle.js" defer></script>
       </head>
       <body>
@@ -28,33 +28,21 @@ function layout(content, state) {
   `;
 }
 
-app.get('/', (req, res) => {
-  removeAllListeners();
-
-  const store = new Store();
-
-  store.ready(() => {
-    const content = renderToString(<Container store={store} />);
-    res.send(layout(content, store.getState()));
-  });
-
-  dispatch({type: types.START_APP, pathname: req.path});
-});
-
-app.get('/dashboard', (req, res) => {
-  removeAllListeners();
-
-  const store = new Store();
-
-  store.ready(() => {
-    const content = renderToString(<Container store={store} />);
-    res.send(layout(content, store.getState()));
-  });
-
-  dispatch({type: types.START_APP, pathname: req.path});
-});
-
 app.use(express.static('public'));
+
+app.get('*', (req, res) => {
+  removeAllListeners();
+
+  const store = new Store();
+
+  store.ready(() => {
+    const content = renderToString(<Container store={store} />);
+    res.send(layout(content, store.getState()));
+  });
+
+  dispatch({type: types.START_APP, pathname: req.path});
+});
+
 app.listen(3000, () => {
   console.log('listening on port 3000');
 });

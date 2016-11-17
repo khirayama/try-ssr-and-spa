@@ -12,7 +12,11 @@ export default class Store extends EventEmitter {
   constructor(state) {
     super();
 
-    this.state = Object.assign({}, state);
+    this.state = Object.assign({
+      load: false,
+      pathname: '',
+      title: 'SSR + SPA',
+    }, state);
 
     this._subscribe();
   }
