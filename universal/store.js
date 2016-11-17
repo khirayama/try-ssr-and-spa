@@ -9,13 +9,11 @@ const actionTypes = {
 };
 
 export default class Store extends EventEmitter {
-  constructor() {
+  constructor(state) {
     super();
 
-    this.state = {
-      load: false,
-      pathname: '',
-    };
+    this.state = Object.assign({}, state);
+
     this._subscribe();
   }
   _subscribe() {
@@ -33,9 +31,6 @@ export default class Store extends EventEmitter {
 
       this.dispatchChange();
     });
-  }
-  initialize(state) {
-    this.state = state || this.state;
   }
   getState() {
     return Object.assign({}, this.state);

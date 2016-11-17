@@ -3,7 +3,7 @@ import React, {Component, PropTypes} from 'react';
 import {dispatch} from 'universal/dispatcher';
 import types from 'universal/action-types';
 
-function changeHistory(pathname) {
+function changeLocation(pathname) {
   if (history) {
     history.pushState(null, null, pathname);
   }
@@ -21,7 +21,7 @@ class Link extends Component {
   }
   _handleClick(event) {
     event.preventDefault();
-    changeHistory(this.props.href);
+    changeLocation(this.props.href);
   }
   render() {
     return <a href={this.props.href} onClick={this.handleClick}>{this.props.children}</a>;
