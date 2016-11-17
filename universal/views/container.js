@@ -45,11 +45,19 @@ export default class Container extends Component {
   getStore() {
     return this.props.store;
   }
+  _dirtySetTitle(state, title) {
+    state._title = title;
+    this.props.store.state._title = title;
+    if (typeof window === 'object') {
+      window.document.title = state._title;
+    }
+  }
   render() {
     const state = this.props.store.getState();
 
     switch (state.pathname) {
       case '/':
+        this._dirtySetTitle(state, 'Top');
         return (
           <section>
             <h1>Top</h1>
@@ -57,6 +65,7 @@ export default class Container extends Component {
           </section>
         );
       case '/dashboard':
+        this._dirtySetTitle(state, 'Dashboard');
         return (
           <section>
             <h1>Dashboard</h1>
@@ -64,6 +73,7 @@ export default class Container extends Component {
           </section>
         );
       default:
+        this._dirtySetTitle(state, 'Not Found');
         return (
           <section>
             <h1>Not Found</h1>

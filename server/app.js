@@ -17,7 +17,7 @@ function layout(content, state) {
     <html>
       <head>
         <meta charset="utf-8">
-        <title>${state.title}</title>
+        <title>${state._title}</title>
         <script src="/bundle.js" defer></script>
       </head>
       <body>

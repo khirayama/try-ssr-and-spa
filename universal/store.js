@@ -13,9 +13,10 @@ export default class Store extends EventEmitter {
     super();
 
     this.state = Object.assign({
+      _title: 'SSR + SPA',
+
       load: false,
       pathname: '',
-      title: 'SSR + SPA',
     }, state);
 
     this._subscribe();
