@@ -1,6 +1,6 @@
 const actionTypes = {
   START_APP: '__START_APP',
-  CHANGE_HISTORY: '__CHANGE_HISTORY',
+  CHANGE_LOCATION: '__CHANGE_LOCATION',
 };
 
 export default actionTypes;

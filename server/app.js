@@ -3,11 +3,12 @@ import express from 'express';
 import React from 'react';
 import {renderToString} from 'react-dom/server';
 
-import {dispatch, removeAllListeners} from 'universal/dispatcher';
+import {removeAllListeners} from 'universal/dispatcher';
 import Store from 'universal/store';
-import types from 'universal/action-types';
 
 import Container from 'universal/views/container';
+
+import {startApplication} from 'universal/actions/application-action-creators';
 
 const app = express();
 
@@ -17,7 +18,7 @@ function layout(content, state) {
     <html>
       <head>
         <meta charset="utf-8">
-        <title>${state._title}</title>
+        <title>${state.title}</title>
         <script src="/bundle.js" defer></script>
       </head>
       <body>
@@ -40,7 +41,7 @@ app.get('*', (req, res) => {
     res.send(layout(content, store.getState()));
   });
 
-  dispatch({type: types.START_APP, pathname: req.path});
+  startApplication(req.path);
 });
 
 app.listen(3000, () => {

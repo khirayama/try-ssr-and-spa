@@ -8,15 +8,25 @@ const actionTypes = {
   READY_APP: '__READY_APP',
 };
 
-export default class Store extends EventEmitter {
+class MicroStore extends EventEmitter {
+  getState() {
+    return Object.assign({}, this.state);
+  }
+  dispatchChange() {
+    this.emit(actionTypes.CHANGE_STORE);
+  }
+  addChangeListener(listener) {
+    this.addListener(actionTypes.CHANGE_STORE, listener);
+  }
+}
+
+export default class Store extends MicroStore {
   constructor(state) {
     super();
 
     this.state = Object.assign({
-      _title: 'SSR + SPA',
-
-      load: false,
       pathname: '',
+      title: '',
     }, state);
 
     this._subscribe();
@@ -25,28 +35,25 @@ export default class Store extends EventEmitter {
     subscribe(action => {
       switch (action.type) {
         case types.START_APP:
-          this.state.load = true;
           this.state.pathname = action.pathname;
-          this.emit(actionTypes.READY_APP);
+          this.state.title = action.title;
+
+          this._dispatchReady();
           break;
-        case types.CHANGE_HISTORY:
+        case types.CHANGE_LOCATION:
           this.state.pathname = action.pathname;
+          this.state.title = action.title;
           break;
       }
 
+      console.log(action, this.state);
       this.dispatchChange();
     });
   }
-  getState() {
-    return Object.assign({}, this.state);
+  _dispatchReady() {
+    this.emit(actionTypes.READY_APP);
   }
   ready(callback) {
-    this.on(actionTypes.READY_APP, callback);
-  }
-  dispatchChange() {
-    this.emit(actionTypes.CHANGE_STORE);
-  }
-  addChangeListener(listener) {
-    this.addListener(actionTypes.CHANGE_STORE, listener);
+    this.addListener(actionTypes.READY_APP, callback);
   }
 }

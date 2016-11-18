@@ -3,15 +3,7 @@ import React, {Component, PropTypes} from 'react';
 import {dispatch} from 'universal/dispatcher';
 import types from 'universal/action-types';
 
-function changeLocation(pathname) {
-  if (history) {
-    history.pushState(null, null, pathname);
-  }
-  dispatch({
-    type: types.CHANGE_HISTORY,
-    pathname,
-  });
-};
+import {changeLocation} from 'universal/actions/application-action-creators';
 
 class Link extends Component {
   constructor() {
@@ -21,7 +13,13 @@ class Link extends Component {
   }
   _handleClick(event) {
     event.preventDefault();
-    changeLocation(this.props.href);
+
+    const pathname = this.props.href;
+
+    if (history) {
+      history.pushState(null, null, pathname);
+    }
+    changeLocation(pathname);
   }
   render() {
     return <a href={this.props.href} onClick={this.handleClick}>{this.props.children}</a>;
@@ -45,19 +43,18 @@ export default class Container extends Component {
   getStore() {
     return this.props.store;
   }
-  _dirtySetTitle(state, title) {
-    state._title = title;
-    this.props.store.state._title = title;
-    if (typeof window === 'object') {
-      window.document.title = state._title;
-    }
+  updateTitle(title) {
+    window.document.title = title;
   }
   render() {
     const state = this.props.store.getState();
 
+    if (typeof window === 'object') {
+      this.updateTitle(state.title);
+    }
+
     switch (state.pathname) {
       case '/':
-        this._dirtySetTitle(state, 'Top');
         return (
           <section>
             <h1>Top</h1>
@@ -65,7 +62,6 @@ export default class Container extends Component {
           </section>
         );
       case '/dashboard':
-        this._dirtySetTitle(state, 'Dashboard');
         return (
           <section>
             <h1>Dashboard</h1>
@@ -73,7 +69,6 @@ export default class Container extends Component {
           </section>
         );
       default:
-        this._dirtySetTitle(state, 'Not Found');
         return (
           <section>
             <h1>Not Found</h1>
