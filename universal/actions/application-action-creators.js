@@ -1,45 +1,51 @@
 import {dispatch} from 'universal/dispatcher';
 import types from 'universal/action-types';
 
-export function startApplication(pathname) {
-  let title = '';
+function initializeApplication() {
+  return new Promise((resolve, reject) => {
+    console.log('fetch application resource');
+    resolve();
+  });
+}
 
+function updateTitle(title) {
+  return new Promise((resolve, reject) => {
+    dispatch({
+      type: types.UPDATE_TITLE,
+      title,
+    });
+    resolve();
+  });
+}
+
+function initializePage(pathname) {
   switch (pathname) {
     case '/':
-      title = 'Top';
+      updateTitle('Top');
       break;
     case '/dashboard':
-      title = 'Dashboard';
+      updateTitle('Dashboard');
       break;
     default:
-      title = 'Not Found';
+      updateTitle('Not Found');
       break;
   }
+}
+
+export function startApplication(pathname) {
+  initializeApplication();
+  initializePage(pathname);
   dispatch({
     type: types.START_APP,
     pathname,
-    title,
   });
 }
 
 export function changeLocation(pathname) {
-  let title = '';
-
-  switch (pathname) {
-    case '/':
-      title = 'Top';
-      break;
-    case '/dashboard':
-      title = 'Dashboard';
-      break;
-    default:
-      title = 'Not Found';
-      break;
-  }
+  initializePage(pathname);
   dispatch({
     type: types.CHANGE_LOCATION,
     pathname,
-    title,
   });
 };
 

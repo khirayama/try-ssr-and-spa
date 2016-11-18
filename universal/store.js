@@ -36,12 +36,13 @@ export default class Store extends MicroStore {
       switch (action.type) {
         case types.START_APP:
           this.state.pathname = action.pathname;
-          this.state.title = action.title;
 
           this._dispatchReady();
           break;
         case types.CHANGE_LOCATION:
           this.state.pathname = action.pathname;
+          break;
+        case types.UPDATE_TITLE:
           this.state.title = action.title;
           break;
       }
